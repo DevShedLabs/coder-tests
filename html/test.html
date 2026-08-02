@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test Page</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-bg:      #1e1e2e;
+      --color-surface: #313244;
+      --color-text:    #cdd6f4;
+      --color-accent:  #89b4fa;
+      --color-muted:   #6c7086;
+      --radius:        8px;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      padding: 2rem;
+      line-height: 1.6;
+    }
+
+    .container { max-width: 800px; margin: 0 auto; }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--color-surface);
+      margin-bottom: 2rem;
+    }
+
+    h1 { font-size: 1.5rem; color: var(--color-accent); }
+
+    .card {
+      background: var(--color-surface);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .card h2 { font-size: 1rem; margin-bottom: .5rem; }
+    .card p  { color: var(--color-muted); font-size: .9rem; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      padding: .5rem 1rem;
+      border-radius: calc(var(--radius) / 2);
+      font-size: .875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity .15s;
+    }
+    .btn:hover { opacity: .85; }
+    .btn-primary { background: var(--color-accent); color: var(--color-bg); border: none; }
+    .btn-ghost   { background: transparent; color: var(--color-text); border: 1px solid var(--color-surface); }
+
+    form { display: flex; flex-direction: column; gap: .75rem; }
+    label { font-size: .875rem; color: var(--color-muted); }
+    input, textarea, select {
+      width: 100%;
+      background: var(--color-bg);
+      border: 1px solid var(--color-muted);
+      border-radius: calc(var(--radius) / 2);
+      padding: .5rem .75rem;
+      color: var(--color-text);
+      font-size: .9rem;
+      outline: none;
+      transition: border-color .15s;
+    }
+    input:focus, textarea:focus, select:focus { border-color: var(--color-accent); }
+
+    #output {
+      margin-top: 1rem;
+      padding: .75rem;
+      background: var(--color-bg);
+      border-radius: calc(var(--radius) / 2);
+      font-family: monospace;
+      font-size: .85rem;
+      min-height: 2.5rem;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>DevShed — HTML Test</h1>
+      <div style="display:flex;gap:.5rem;">
+        <button class="btn btn-ghost" id="themeBtn">Toggle Theme</button>
+        <button class="btn btn-primary" id="clearBtn">Clear</button>
+      </div>
+    </header>
+
+    <div class="card">
+      <h2>Form Controls</h2>
+      <form id="demoForm">
+        <div>
+          <label for="nameInput">Name</label>
+          <input type="text" id="nameInput" placeholder="Alice" autocomplete="off" />
+        </div>
+        <div>
+          <label for="roleSelect">Role</label>
+          <select id="roleSelect">
+            <option value="">Select a role…</option>
+            <option value="admin">Admin</option>
+            <option value="editor">Editor</option>
+            <option value="viewer">Viewer</option>
+          </select>
+        </div>
+        <div>
+          <label for="notes">Notes</label>
+          <textarea id="notes" rows="3" placeholder="Optional notes…"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      <div id="output">Output will appear here…</div>
+    </div>
+
+    <div class="card">
+      <h2>Dynamic List</h2>
+      <p>Items added via form submission appear here.</p>
+      <ul id="itemList" style="margin-top:.75rem;list-style:none;display:flex;flex-direction:column;gap:.4rem;"></ul>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('demoForm')
+    const output = document.getElementById('output')
+    const list = document.getElementById('itemList')
+
+    form.addEventListener('submit', e => {
+      e.preventDefault()
+      const data = Object.fromEntries(new FormData(form))
+      const name = document.getElementById('nameInput').value.trim()
+      const role = document.getElementById('roleSelect').value
+      const notes = document.getElementById('notes').value.trim()
+
+      if (!name) {
+        output.textContent = '⚠ Name is required.'
+        return
+      }
+
+      const entry = { name, role: role || 'viewer', notes, ts: new Date().toISOString() }
+      output.textContent = JSON.stringify(entry, null, 2)
+
+      const li = document.createElement('li')
+      li.style.cssText = 'padding:.4rem .6rem;background:var(--color-bg);border-radius:4px;font-size:.875rem;'
+      li.textContent = `${name} · ${entry.role}`
+      list.prepend(li)
+
+      form.reset()
+    })
+
+    document.getElementById('clearBtn').addEventListener('click', () => {
+      output.textContent = 'Output will appear here…'
+      list.innerHTML = ''
+    })
+
+    // Emmet test — expand div.card>h2{Title}+p{Content} in the editor
+  </script>
+</body>
+</html>
