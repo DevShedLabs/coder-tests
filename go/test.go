@@ -181,7 +181,7 @@ func main() {
 	mux.Handle("/users", handler)
 
 	srv := &http.Server{
-		Addr:         ":8080",
+		Addr:         ":8081",
 		Handler:      mux,
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 10 * time.Second,
