@@ -41,7 +41,7 @@ inline fn square(x: f64) f64 {
 }
 
 /// Extern-exported function.
-export fn greet() callconv(.C) void {
+export fn greet() callconv(.c) void {
     _ = NAME; // suppress unused warning
 }
 
@@ -214,7 +214,7 @@ fn comptimeSquare(comptime x: i32) i32 {
     return x * x;
 }
 
-const SQUARE_OF_FIVE: i32 = comptime comptimeSquare(5);
+const SQUARE_OF_FIVE: i32 = comptimeSquare(5);
 
 fn max(comptime T: type, a: T, b: T) T {
     return if (a > b) a else b;
@@ -236,21 +236,9 @@ fn describe(thing: anytype) void {
 // ---------------------------------------------------------------------------
 // 10. Async / Suspend / Resume
 // ---------------------------------------------------------------------------
-
-var async_frame: anyframe = undefined;
-
-fn asyncWorker() void {
-    suspend {
-        async_frame = @frame();
-    }
-    // resume continues here
-}
-
-fn asyncDemo() void {
-    var frame = async asyncWorker();
-    resume async_frame;
-    await frame;
-}
+// async/await/suspend/resume were removed from the language (pending a
+// redesign) as of Zig 0.11 — left out here since `zig test` on 0.16.0+
+// rejects them as a syntax error before any test in the file can run.
 
 // ---------------------------------------------------------------------------
 // 11. Loops with labels, nested, and continue/break
