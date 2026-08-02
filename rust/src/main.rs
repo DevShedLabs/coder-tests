@@ -23,7 +23,7 @@ pub enum Role {
 impl fmt::Display for Role {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Role::Admin  => write!(f, "admin"),
+            Role::Admin => write!(f, "admin"),
             Role::Editor => write!(f, "editor"),
             Role::Viewer => write!(f, "viewer"),
         }
@@ -40,7 +40,12 @@ pub struct User {
 
 impl User {
     pub fn new(id: u32, name: impl Into<String>, email: impl Into<String>, role: Role) -> Self {
-        Self { id, name: name.into(), email: email.into(), role }
+        Self {
+            id,
+            name: name.into(),
+            email: email.into(),
+            role,
+        }
     }
 
     pub fn is_admin(&self) -> bool {
@@ -50,20 +55,27 @@ impl User {
 
 impl fmt::Display for User {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}#{} <{}> [{}]", self.name, self.id, self.email, self.role)
+        write!(
+            f,
+            "{}#{} <{}> [{}]",
+            self.name, self.id, self.email, self.role
+        )
     }
 }
 
 // --- In-memory repository ---
 
 pub struct UserRepo {
-    store:   HashMap<u32, User>,
+    store: HashMap<u32, User>,
     counter: u32,
 }
 
 impl UserRepo {
     pub fn new() -> Self {
-        Self { store: HashMap::new(), counter: 0 }
+        Self {
+            store: HashMap::new(),
+            counter: 0,
+        }
     }
 }
 
@@ -102,9 +114,9 @@ pub enum AppError {
 impl fmt::Display for AppError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            AppError::NotFound(msg)   => write!(f, "Not found: {msg}"),
+            AppError::NotFound(msg) => write!(f, "Not found: {msg}"),
             AppError::Validation(msg) => write!(f, "Validation: {msg}"),
-            AppError::Internal(msg)   => write!(f, "Internal: {msg}"),
+            AppError::Internal(msg) => write!(f, "Internal: {msg}"),
         }
     }
 }
@@ -165,11 +177,11 @@ fn top_names(users: &[User], limit: usize) -> Vec<&str> {
 
 fn main() {
     let repo = Arc::new(Mutex::new(UserRepo::new()));
-    let svc  = UserService::new(Arc::clone(&repo));
+    let svc = UserService::new(Arc::clone(&repo));
 
     let ids: Vec<u32> = [
         ("Alice", "alice@example.com", Role::Admin),
-        ("Bob",   "bob@example.com",   Role::Editor),
+        ("Bob", "bob@example.com", Role::Editor),
         ("Carol", "carol@example.com", Role::Viewer),
     ]
     .iter()
@@ -179,7 +191,7 @@ fn main() {
     for id in &ids {
         match svc.get(*id) {
             Ok(user) => println!("{user}"),
-            Err(e)   => eprintln!("error: {e}"),
+            Err(e) => eprintln!("error: {e}"),
         }
     }
 
@@ -198,7 +210,7 @@ fn main() {
 
     // Error handling
     match svc.create("", "bad", Role::Viewer) {
-        Ok(_)  => unreachable!(),
+        Ok(_) => unreachable!(),
         Err(e) => println!("\nExpected error: {e}"),
     }
 }
