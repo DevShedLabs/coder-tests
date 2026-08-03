@@ -1,5 +1,7 @@
 # Language Tests
 
+https://coderide.dev 
+
 A collection of per-language test files used to exercise editor features:
 **syntax highlighting, bracket matching, code folding, indentation,
 auto-completion, diagnostics, go-to-definition, find-references**, and more.
