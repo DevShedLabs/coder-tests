@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React, PHP &amp; Go: Three Best Friends Who Actually Work Great Together</title>
+  <meta name="description" content="They don't have to fight. Here's how React, PHP, and Go can be friends and work well together in a modern web stack.">
+  <style>
+    :root {
+      --bg: #f7f8fc;
+      --surface: #ffffff;
+      --text: #1f2330;
+      --muted: #5b6270;
+      --accent: #4668e6;
+      --php: #7a5fc0;
+      --go: #00add8;
+      --react: #61dafb;
+      --border: #e6e8f0;
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header.hero {
+      background: linear-gradient(135deg, #4668e6 0%, #7a5fc0 55%, #00add8 100%);
+      color: #fff;
+      padding: 60px 0 56px;
+      margin-bottom: 40px;
+    }
+
+    .hero-inner { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+
+    .kicker {
+      display: inline-block;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.18);
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 2.1rem;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+
+    .meta {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    .meta span { margin-right: 16px; }
+
+    figure {
+      margin: 0 0 34px;
+    }
+
+    figure img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: var(--radius);
+      box-shadow: 0 12px 34px rgba(31, 35, 48, 0.14);
+      border: 1px solid var(--border);
+    }
+
+    figcaption {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    article { padding-bottom: 56px; }
+
+    h2 {
+      margin-top: 2.2em;
+      font-size: 1.5rem;
+      letter-spacing: -0.01em;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 8px;
+    }
+
+    h3 { margin-top: 1.6em; font-size: 1.12rem; }
+
+    p { margin: 16px 0; }
+
+    ul, ol { padding-left: 24px; }
+
+    li { margin: 8px 0; }
+
+    code {
+      background: #eef0f7;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2px 6px;
+      font-family: "SF Mono", "Menlo", "Consolas", monospace;
+      font-size: 0.9em;
+    }
+
+    pre {
+      background: #1b1f2b;
+      color: #e6edf3;
+      padding: 18px;
+      border-radius: var(--radius);
+      overflow-x: auto;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    pre code {
+      background: none;
+      border: none;
+      color: inherit;
+      padding: 0;
+    }
+
+    blockquote {
+      margin: 24px 0;
+      padding: 14px 20px;
+      border-left: 4px solid var(--accent);
+      background: #eef1fd;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      color: var(--muted);
+    }
+
+    .personas {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    .persona {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: 0 4px 14px rgba(31, 35, 48, 0.06);
+    }
+
+    .persona h4 {
+      margin: 0 0 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .dot.react { background: var(--react); }
+    .dot.php { background: var(--php); }
+    .dot.go { background: var(--go); }
+
+    .persona p { margin: 0; font-size: 0.9rem; color: var(--muted); }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0 40px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-align: center;
+      background: var(--surface);
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="kicker">Full-stack · Friends &amp; Tech</span>
+      <h1>React, PHP &amp; Go: Three Best Friends Who Actually Work Great Together</h1>
+      <div class="meta">
+        <span>✍️ Jeffrey</span>
+        <span>📅 Aug 10, 2026</span>
+        <span>⏱ 6 min read</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <figure>
+      <img src="../images/react-php-go-friends.png" alt="React, PHP, and Go mascots as friendly teammates working together">
+      <figcaption>Three different tools, one happy team. Art by our little drawing bot.</figcaption>
+    </figure>
+
+    <article>
+      <p>
+        There's a myth floating around the web: that to be a "serious" engineer you must
+        pick <em>one</em> language and marry it for life. Pick React and shun the backend.
+        Pick Go and scoff at anything interpreted. Pick PHP and… well, the internet has
+        opinions. But here's the truth. React, PHP, and Go aren't rivals fighting for a
+        throne. They're <strong>friends</strong> — each great at what they do, and they slot
+        together beautifully on a modern stack.
+      </p>
+
+      <h2>The Friendship, Explained</h2>
+      <p>
+        In the image above, you'll notice each mascot brings its own little piece to one
+        shared puzzle: the atom-core energy of React, the gentle elephant wisdom of PHP, and
+        the spunky little gopher from Go. They're holding hands, sliding gears into place.
+        That's not a coincidence — it's the exact shape of a well-architected product.
+      </p>
+
+      <div class="personas">
+        <div class="persona">
+          <h4><span class="dot react"></span>React</h4>
+          <p>The friendly face. Handles the UI, keeps the interface lively and responsive.</p>
+        </div>
+        <div class="persona">
+          <h4><span class="dot php"></span>PHP</h4>
+          <p>The workhorse. Your template-first pages, server-side rendering, and glue.</p>
+        </div>
+        <div class="persona">
+          <h4><span class="dot go"></span>Go</h4>
+          <p>The powerhouse. Fast APIs, concurrency, and the heavy lifting under the hood.</p>
+        </div>
+      </div>
+
+      <h2>Why They Play Nicely Together</h2>
+      <p>
+        The secret to great teams — human or code — is a clear division of labor. Let's see
+        where each language shines and how the others fill the gaps.
+      </p>
+
+      <h3>React owns the interface</h3>
+      <p>
+        React is king of declarative UI. Components, state, and that buttery-smooth
+        re-rendering are perfect for anything interactive — dashboards, editors, apps. When
+        a user needs to <em>feel</em> an interface, React is your friend.
+      </p>
+
+      <h3>PHP owns the content</h3>
+      <p>
+        PHP still powers a huge portion of the web, and it's unfairly good at what it does:
+        turning HTML on the server. It's the backbone for content sites, blogs, and CMSes.
+        You don't need a 200-megabyte toolchain to ship a page — PHP just works.
+      </p>
+
+      <h3>Go owns the scale</h3>
+      <p>
+        When you need to move a million requests without breaking a sweat, Go's lightweight
+        goroutines and compiled speed come through. It's the perfect choice for APIs,
+        background workers, and services that have to stay up.
+      </p>
+
+      <h2>A Realistic Pattern</h2>
+      <p>
+        Here's how these friends might actually sit together in one application:
+      </p>
+
+      <ul>
+        <li><strong>Go</strong> exposes a fast JSON API for heavy operations.</li>
+        <li><strong>PHP</strong> serves the pages people discover and read.</li>
+        <li><strong>React</strong> builds the interactive bits on top of both.</li>
+      </ul>
+
+      <pre><code>// Go: a snappy API endpoint
+http.HandleFunc("/api/users", func(w http.ResponseWriter, r *http.Request) {
+    json.NewEncoder(w).Encode(users)
+})</code></pre>
+
+      <blockquote>
+        Use the <strong>right tool for the job</strong>, not the tool you're most loyal to. Friends
+        don't compete — they delegate.
+      </blockquote>
+
+      <p>
+        Is it more complex than one monolith trained to do everything? Sometimes. But the
+        result is a system where each language does what it's genuinely best at, and the
+        whole thing moves faster than any of them could alone.
+      </p>
+
+      <h2>Stop Choosing. Start Teaming.</h2>
+      <p>
+        The takeaway is simple: don't let fanboy wars drive your architecture. Be like the
+        three friends in the picture. Keep your stack open-minded, let each language shine
+        in its lane, and you'll find that React, PHP, and Go aren't just compatible —
+        they're a delight.
+      </p>
+
+      <p>
+        Now go build something cool with your whole squad. 🚀
+      </p>
+    </article>
+  </div>
+
+  <footer>
+    <div class="container">
+      © 2026 language-tests · Written because tech doesn't have to fight.
+    </div>
+  </footer>
+</body>
+</html>
