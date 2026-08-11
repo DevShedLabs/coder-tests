@@ -372,16 +372,60 @@ $upload = $_POST['file_to_process'] ?? '';
 // Hand off the long job to Go, get an ID fast.
 $jobId = go_submit($upload);
 
+// Record it as pending so a later scheduled pass can find it.
+save_pending_job($jobId, $upload);
+
 // Show a "processing…" screen while Go does the work.
 echo "Your job is queued! ID: {$jobId}";
 
-// Later, poll for the result:
-// $status = go_status($jobId);</code></pre>
+// Done — this request returns NOW.
+// Completion happens separately, on a schedule. No blocking, no spin-waiting.</code></pre>
 
       <blockquote>
         The user sees an instant response. The long task runs safely in its own process.
         PHP stays snappy. Go stays busy. Everyone wins.
       </blockquote>
+
+      <h2>Completing Jobs on a Schedule — Not on a Request</h2>
+      <p>
+        Here's the part I want to be honest about. Checking <code>go_status</code> from
+        inside the user request is tempting but wrong. If you "poll" that way —
+        firing repeated <code>go_status</code> calls until the job is done — you've just
+        recreated the long-running request you were trying to avoid. A tight polling loop
+        hangs onto the PHP worker, spins CPU, and defeats the whole point of handing the
+        work to Go.
+      </p>
+
+      <p>
+        You know how long your task takes — say two minutes. The right move is to check
+        <em>once, later</em>, on a schedule that outlasts the job. A cron job is perfect for
+        this: it runs in its own process, not in a web request, so nothing in the front end
+        ever waits.
+      </p>
+
+      <pre><code><span class="lang">PHP CLI — check_jobs.php (run by cron, not by a user)</span>&lt;?php
+
+// Find IDs we queued but haven't finished yet.
+$pending = get_pending_jobs();
+
+foreach ($pending as $job) {
+    $status = go_status($job['go_id']);
+
+    if ($status !== null) {
+        mark_job_complete($job['id'], $status);
+    }
+}</code></pre>
+
+      <p>And the cron line — for a job that runs two minutes, check every three:</p>
+
+      <pre><code><span class="lang">crontab</span>*/3 * * * * php /var/www/scripts/check_jobs.php</pre></code>
+
+      <p>
+        Set the interval a little <em>longer</em> than the longest job. The batch pass finds
+        finished jobs and records their results; anything still running just waits for the
+        next pass. The web request never blocks, the PHP worker is free, and Go keeps
+        simmering in the background on its own time.
+      </p>
 
       <h2>Operational Notes for the Real World</h2>
       <p>
@@ -394,6 +438,11 @@ echo "Your job is queued! ID: {$jobId}";
             supervisor so Go restarts if it crashes.</li>
         <li><strong>Persist state.</strong> If you need results to survive a restart, back them
             up to a database instead of an in-memory map.</li>
+        <li><strong>Never block the request with polling.</strong> Let a scheduled pass (cron,
+            or a worker consuming a quota) check results after the job finishes. Keep web
+            requests fast by design.</li>
+        <li><strong>De-duplicate cron passes.</strong> Make the status check idempotent — a job
+            marked complete should never be checked twice, even if two passes overlap.</li>
         <li><strong>Secure it.</strong> Bind Go to <code>localhost</code> or a private network
             so only your PHP app can reach it — or protect the endpoint with a shared token.</li>
         <li><strong>Add timeouts.</strong> Set reasonable cURL timeouts in PHP and cancel
