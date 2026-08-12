@@ -183,6 +183,7 @@
 	</div>
 
 	<script>
+		// Testing comments
 		const form = document.getElementById('demoForm')
 		const output = document.getElementById('output')
 		const list = document.getElementById('itemList')
@@ -199,7 +200,7 @@
 				return
 			}
 
-			const entry = {name, role: role || 'viewer', notes, ts: new Date().toISOString()}
+			const entry = { name, role: role || 'viewer', notes, ts: new Date().toISOString() }
 			output.textContent = JSON.stringify(entry, null, 2)
 
 			const li = document.createElement('li')
@@ -215,7 +216,7 @@
 			list.innerHTML = ''
 		})
 
-    // Emmet test — expand div.card>h2{Title}+p{Content} in the editor
+		// Emmet test — expand div.card>h2{Title}+p{Content} in the editor
 	</script>
 </body>
 
