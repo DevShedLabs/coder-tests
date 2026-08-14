@@ -11,6 +11,8 @@ use JsonSerializable;
 
 /**
  * User model representing an authenticated account.
+ * @throws NotFoundException
+ * 
  */
 class User implements JsonSerializable, Cacheable
 {
