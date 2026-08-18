@@ -1,0 +1,20 @@
+generation_id,created_at,cost_total,cost_cache,tokens_prompt,tokens_completion,tokens_reasoning,tokens_cached,model_permaslug,provider_name,variant,cancelled,finish_reason_raw,finish_reason_normalized,generation_time_ms,time_to_first_token_ms,app_name
+gen-1784001004-RNfWtwYmuMPLSrO8CJKw,2026-07-14 03:50:04.568,0.001549,,4925,60,28,0,minimax/minimax-m3-20260531,Together,standard,false,stop,stop,1187,668,DevShed Coder
+gen-1784000881-YzWm4Dy0yAVMiUMnwI0q,2026-07-14 03:48:01.958,0.000933,,2832,70,50,0,minimax/minimax-m3-20260531,Together,standard,false,stop,stop,1432,668,DevShed Coder
+gen-1784000833-qJ3uWDyKgIHBublNnzHU,2026-07-14 03:47:13.218,0.0016,,5082,63,0,0,minimax/minimax-m3-20260531,Together,standard,false,stop,stop,968,509,DevShed Coder
+gen-1784000713-Gat41FvBEd45EQYn4wVp,2026-07-14 03:45:13.841,0.003142,,4923,105,57,0,minimax/minimax-m2.7-20260318,Groq,standard,false,stop,stop,891,891,DevShed Coder
+gen-1783999294-7awB8gdNhAD1dtotokLW,2026-07-14 03:21:34.724,0.010107,-0.000096,4680,57,0,51,z-ai/glm-5.2-20260616,Fireworks,standard,false,stop,stop,775,548,DevShed Coder
+gen-1783999280-vw6q3i1DjBGE4hKdjief,2026-07-14 03:21:20.078,0.001597,-0.002031,3881,88,68,2944,moonshotai/kimi-k2.7-code-20260612,ModelRun,standard,false,stop,stop,425,129,DevShed Coder
+gen-1783997815-Q3pJmKt9ib8FpGzr0Ieb,2026-07-14 02:56:55.090,0.000325,,5229,101,76,0,poolside/laguna-xs-2.1-20260625,Poolside,standard,false,stop,stop,411,180,DevShed Coder
+gen-1783997519-6D2oIL4rtv2PzYKbdv4P,2026-07-14 02:51:59.326,0.035321,-0.002334,37310,553,505,3072,moonshotai/kimi-k2.7-code-20260612,Together,standard,false,stop,stop,3224,1420,DevShed Coder
+gen-1783997193-fqZyKOHVXxpNvbJKc3aM,2026-07-14 02:46:33.179,0.007843,-0.027968,37111,139,0,36800,moonshotai/kimi-k2.7-code-20260612,Together,standard,false,stop,stop,779,422,DevShed Coder
+gen-1783997190-dHtNCTvfm2BWtFGpratj,2026-07-14 02:46:30.308,0.036042,,36811,268,0,0,moonshotai/kimi-k2.7-code-20260612,Together,standard,false,tool_calls,tool_calls,2141,1477,DevShed Coder
+gen-1783997188-QYXaIXu0ypO8mFpyTpVO,2026-07-14 02:46:27.960,0.021797,,24877,174,148,0,moonshotai/kimi-k2.7-code-20260612,ModelRun,standard,false,tool_calls,tool_calls,1743,1112,DevShed Coder
+gen-1783996629-DryEulOIteX5jX5GeqYz,2026-07-14 02:37:09.445,0.014086,-0.007595,24613,203,0,11008,moonshotai/kimi-k2.7-code-20260612,ModelRun,standard,false,stop,stop,1530,655,DevShed Coder
+gen-1783996579-tj3xphklap25EtHYNF0t,2026-07-14 02:36:19.146,0.058069,-0.002649,11103,13675,199,3840,moonshotai/kimi-k2.7-code-20260612,ModelRun,standard,false,tool_calls,tool_calls,49156,313,DevShed Coder
+gen-1783996578-sUUAA2F9vRqarowHDO1t,2026-07-14 02:36:17.911,0.003539,,3860,69,43,0,moonshotai/kimi-k2.7-code-20260612,ModelRun,standard,false,tool_calls,tool_calls,593,374,DevShed Coder
+gen-1783996197-Ps5UXlA0MxoWs7sn2Bby,2026-07-14 02:29:57.805,0.01999,-0.001351,13915,12984,12773,4224,qwen/qwen3.7-plus-20260602,Alibaba,standard,false,tool_calls,tool_calls,237501,1441,DevShed Coder
+gen-1783996192-125tuuWhmvwqpHkmnhFb,2026-07-14 02:29:52.297,0.001885,,5368,131,74,0,qwen/qwen3.7-plus-20260602,Alibaba,standard,false,tool_calls,tool_calls,4953,2535,DevShed Coder
+gen-1783995697-LSLuV6daxd30WmkbFUGq,2026-07-14 02:21:37.241,0.000633,-0.000136,11284,318,318,2720,poolside/laguna-xs-2.1-20260625,Poolside,standard,false,stop,stop,1392,286,DevShed Coder
+gen-1783995650-AgGTmqSyxOA83EOaVMAw,2026-07-14 02:20:50.022,0.001202,-0.000001,2733,8661,149,32,poolside/laguna-xs-2.1-20260625,Poolside,standard,false,tool_calls,tool_calls,46061,146,DevShed Coder
+gen-1783995551-bwplbD2NPmFb0kfCVoPP,2026-07-14 02:19:11.268,0.000175,,2686,118,61,0,poolside/laguna-xs-2.1-20260625,Poolside,standard,false,stop,stop,342,149,DevShed Coder

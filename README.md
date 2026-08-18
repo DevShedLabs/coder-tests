@@ -159,6 +159,10 @@ that would abort the whole file's test run.
 
 ---
 
+## Image Tests
+
+![Image Test](./images/future-ai-coding.png)
+
 ## How to test editor features
 
 Across any language file, try:
