@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Contracts\Cacheable;
 use App\Exceptions\NotFoundException;
 use DateTime;
 use JsonSerializable;
@@ -14,7 +13,7 @@ use JsonSerializable;
  * @throws NotFoundException
  * 
  */
-class User implements JsonSerializable, Cacheable
+class User implements JsonSerializable
 {
 	private static array $instances = [];
 
