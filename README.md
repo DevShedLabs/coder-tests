@@ -20,6 +20,7 @@ across real-world constructs.
 | PHP        | `php/test.php`        | `php test.php`           | PHP ≥ 8.1                            |
 | Python     | `python/test.py`      | `python -m unittest -v`  | Python ≥ 3.10                        |
 | Rust       | `rust/` (Cargo bin)   | `cargo run`              | Rust toolchain                       |
+| Swift      | `swift/` (SPM package) | `swift test`            | Swift toolchain (Xcode / swift.org) |
 | TypeScript | `typescript/test.ts`  | `npx tsx test.ts`        | Node.js + `tsx`, or `tsc` to type-check |
 | Zig        | `zig/test.zig`        | `zig test test.zig`      | Zig ≥ 0.14 (current stable)          |
 
@@ -119,6 +120,30 @@ cargo fmt --check  # formatting check
 
 `cargo run` prints users, admins, and expected errors. `target/` is build
 output; `Cargo.lock` is checked in intentionally.
+
+## Swift — `swift/` (Swift Package)
+
+A Swift package (`swift/Package.swift`) whose library target
+(`Sources/LanguageTests/TestSuite.swift`) exercises structs/classes, enums
+with associated values, generics (`Stack<T>`), protocols, closures, error
+handling (`throws`, `Result`, `do/catch`), inheritance, lazy computation,
+and Swift concurrency (`actor`, `async`/`await`, `TaskGroup`, `Sendable`).
+The `XCTest` suite lives at `Tests/LanguageTestsTests/`.
+
+```sh
+cd swift
+swift build       # compile + fetch diagnostics
+swift test        # run the XCTest suite
+swift test --list-tests   # verify test discovery
+```
+
+Formatting check (requires `swift-format`, part of the Swift toolchain):
+
+```sh
+swift-format lint --strict Sources Tests
+```
+
+Build artifacts go to `swift/.build/` (git-ignored).
 
 ## TypeScript — `typescript/test.ts`
 
