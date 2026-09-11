@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <cassert>
 #include <concepts>
+#include <functional>
 #include <iostream>
 #include <memory>
 #include <optional>
@@ -31,7 +32,7 @@ public:
     [[nodiscard]] std::vector<std::reference_wrapper<const Task>> where(Predicate predicate) const {
         std::vector<std::reference_wrapper<const Task>> matches;
         for (const Task &task : tasks_) {
-            if (predicate(task)) {
+            if (std::invoke(predicate, task)) {
                 matches.emplace_back(task);
             }
         }
@@ -81,7 +82,8 @@ int main() {
     }
 
     std::vector<int> ids;
-    std::ranges::transform(open_tasks, std::back_inserter(ids), [](const Task &task) { return task.get().id; });
+    std::ranges::transform(open_tasks, std::back_inserter(ids),
+                           [](const std::reference_wrapper<const Task> &task) { return task.get().id; });
     assert(ids.size() == 2);
     assert(std::holds_alternative<Created>(create_task("new task")));
     assert(std::holds_alternative<Rejected>(create_task("")));

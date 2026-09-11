@@ -15,6 +15,8 @@ across real-world constructs.
 
 | Language   | File / project        | Run tests                | Requirements                         |
 | ---------- | --------------------- | ------------------------ | ------------------------------------ |
+| C          | `c/test.c`             | compile, then run        | C compiler (C17)                     |
+| C++        | `cpp/test.cpp`         | compile, then run        | C++ compiler (C++20)                 |
 | Go         | `go/test.go`          | `go run test.go`         | Go toolchain                         |
 | HTML/CSS/JS| `html/test.html`      | open in a browser        | none (static file)                   |
 | PHP        | `php/test.php`        | `php test.php`           | PHP ≥ 8.1                            |
@@ -25,6 +27,41 @@ across real-world constructs.
 | Zig        | `zig/test.zig`        | `zig test test.zig`      | Zig ≥ 0.14 (current stable)          |
 
 ---
+
+## C — `c/test.c`
+
+Compile and run from the `c` directory:
+
+```sh
+cd c
+cc -std=c17 -Wall -Wextra -pedantic -O2 test.c -o test
+./test
+```
+
+You can use `gcc` instead of `cc`. For additional static diagnostics:
+
+```sh
+cc -std=c17 -Wall -Wextra -pedantic -fanalyzer test.c -o /tmp/c-language-test
+```
+
+## C++ — `cpp/test.cpp`
+
+Compile and run from the `cpp` directory. The test requires C++20 for concepts and ranges:
+
+```sh
+cd cpp
+c++ -std=c++20 -Wall -Wextra -pedantic -O2 test.cpp -o test
+./test
+```
+
+You can use `clang++` or `g++` instead of `c++`. For sanitizer checks:
+
+```sh
+c++ -std=c++20 -Wall -Wextra -pedantic -fsanitize=address,undefined -g test.cpp -o /tmp/cpp-language-test
+/tmp/cpp-language-test
+```
+
+The `/tmp` output paths keep diagnostic binaries out of the language-test directories.
 
 ## Go — `go/test.go`
 
