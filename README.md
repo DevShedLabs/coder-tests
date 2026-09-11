@@ -16,6 +16,7 @@ across real-world constructs.
 | Language   | File / project        | Run tests                | Requirements                         |
 | ---------- | --------------------- | ------------------------ | ------------------------------------ |
 | C          | `c/test.c`             | compile, then run        | C compiler (C17)                     |
+| Ruby       | `ruby/test.rb`         | `ruby test.rb`           | Ruby ≥ 3.4                           |
 | C++        | `cpp/test.cpp`         | compile, then run        | C++ compiler (C++20)                 |
 | Go         | `go/test.go`          | `go run test.go`         | Go toolchain                         |
 | HTML/CSS/JS| `html/test.html`      | open in a browser        | none (static file)                   |
@@ -62,6 +63,26 @@ c++ -std=c++20 -Wall -Wextra -pedantic -fsanitize=address,undefined -g test.cpp 
 ```
 
 The `/tmp` output paths keep diagnostic binaries out of the language-test directories.
+
+## Ruby — `ruby/test.rb`
+
+Run from the `ruby` directory:
+
+```sh
+cd ruby
+ruby test.rb
+```
+
+The test requires Ruby 3.4+ for the built-in `Data.define` feature. It covers
+immutable data objects, enumerable collections, keyword arguments, blocks,
+`rescue`/`ensure`, JSON parsing, `Set`, symbol-to-proc syntax, and monotonic
+clock timing.
+
+For syntax and style diagnostics, Ruby installations with RuboCop can run:
+
+```sh
+rubocop test.rb
+```
 
 ## Go — `go/test.go`
 
