@@ -24,3 +24,7 @@ $a_{i,j}$
  $E = mc^2$ and $$\sum_{i=1}^n x_i^2$$
 
  $$\int_0^1 x^2\,dx$$
+
+
+> [!WARNING]
+> Be careful when using this feature in production.
