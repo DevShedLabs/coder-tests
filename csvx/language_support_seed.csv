@@ -1,0 +1,14 @@
+Language,Category,Files,Tests,Pass Rate,Status
+PHP,Backend,4,18,0.94,Stable
+Python,Backend,3,16,0.98,Stable
+JavaScript,Web,2,14,0.91,Stable
+TypeScript,Web,2,12,0.96,Stable
+Go,Systems,1,8,0.88,Beta
+Rust,Systems,1,7,0.93,Beta
+C,Systems,1,6,0.82,Experimental
+C++,Systems,1,6,0.85,Experimental
+Ruby,Backend,1,5,0.90,Beta
+Swift,Mobile,1,4,0.89,Experimental
+Zig,Systems,1,4,0.87,Experimental
+HTML,Web,1,3,0.99,Stable
+CSS,Web,1,3,0.97,Stable
