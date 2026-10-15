@@ -11,124 +11,136 @@ use JsonSerializable;
 /**
  * User model representing an authenticated account.
  * @throws NotFoundException
- * 
+ *
  */
-class User implements JsonSerializable
-{
-	private static array $instances = [];
+class User implements JsonSerializable {
+
+	private static array $instances = array();
 
 	public function __construct(
 		private readonly int $id,
 		private string $name,
 		private string $email,
 		private ?DateTime $verifiedAt = null,
-		private array $roles = [],
+		private array $roles = array(),
 	) {}
 
-	public static function find(int $id): static
-	{
-		if (isset(static::$instances[$id])) {
+	public static function find( int $id ): static {
+
+		if ( isset( static::$instances[$id] ) ) {
+
 			return static::$instances[$id];
 		}
 
-		$row = db()->selectOne('SELECT * FROM users WHERE id = ?', [$id]);
+		$row = db()->selectOne( 'SELECT * FROM users WHERE id = ?', array( $id ) );
 
-		if (!$row) {
-			throw new NotFoundException("User {$id} not found");
+		if ( ! $row ) {
+
+			throw new NotFoundException( "User {$id} not found" );
 		}
 
 		return static::$instances[$id] = new static(
 			id: $row['id'],
 			name: $row['name'],
 			email: $row['email'],
-			verifiedAt: $row['verified_at'] ? new DateTime($row['verified_at']) : null,
-			roles: json_decode($row['roles'], true) ?? [],
+			verifiedAt: $row['verified_at'] ? new DateTime( $row['verified_at'] ) : null,
+			roles: json_decode( $row['roles'], true ) ?? array(),
 		);
 	}
 
-	public function isVerified(): bool
-	{
+	public function isVerified(): bool {
+
 		return $this->verifiedAt !== null;
 	}
 
-	public function hasRole(string $role): bool
-	{
-		return in_array($role, $this->roles, strict: true);
+	public function hasRole( string $role ): bool {
+
+		return in_array( $role, $this->roles, strict: true );
 	}
 
-	public function getCacheKey(): string
-	{
+	public function getCacheKey(): string {
+
 		return "user:{$this->id}";
 	}
 
-	public function jsonSerialize(): array
-	{
-		return [
+	public function jsonSerialize(): array {
+
+		return array(
 			'id'          => $this->id,
 			'name'        => $this->name,
 			'email'       => $this->email,
 			'verified'    => $this->isVerified(),
 			'roles'       => $this->roles,
-			'verified_at' => $this->verifiedAt?->format(DateTime::ATOM),
-		];
+			'verified_at' => $this->verifiedAt?->format( DateTime::ATOM ),
+		);
 	}
 
 	// Getters
-	public function getId(): int
-	{
+	public function getId(): int {
+
 		return $this->id;
 	}
-	public function getName(): string
-	{
+
+	public function getName(): string {
+
 		return $this->name;
 	}
-	public function getEmail(): string
-	{
+
+	public function getEmail(): string {
+
 		return $this->email;
 	}
 
-	public function setName(string $name): static
-	{
-		$this->name = trim($name);
+	public function setName( string $name ): static {
+
+		$this->name = trim( $name );
+
 		return $this;
 	}
 }
 
 // --- Standalone helpers ---
 
-function paginate(array $items, int $perPage = 15, int $page = 1): array
-{
-	$offset = ($page - 1) * $perPage;
-	$slice  = array_slice($items, $offset, $perPage);
+function paginate( array $items, int $perPage = 15, int $page = 1 ): array {
 
-	return [
+	$offset = ( $page - 1 ) * $perPage;
+	$slice  = array_slice( $items, $offset, $perPage );
+
+	return array(
 		'data'         => $slice,
-		'total'        => count($items),
+		'total'        => count( $items ),
 		'per_page'     => $perPage,
 		'current_page' => $page,
-		'last_page'    => (int) ceil(count($items) / $perPage),
-	];
+		'last_page'    => (int) ceil( count( $items ) / $perPage ),
+	);
 }
 
 // Match expression (PHP 8+)
-function statusLabel(int $code): string
-{
-	return match (true) {
+function statusLabel( int $code ): string {
+
+	return match ( true ) {
 		$code >= 500 => 'Server Error',
 		$code >= 400 => 'Client Error',
 		$code >= 300 => 'Redirect',
 		$code >= 200 => 'Success',
-		default      => 'Unknown',
+		default => 'Unknown',
 	};
 }
 
+function db() {
+
+	return (object) json_encode( array() );
+}
+
 // Fibers (PHP 8.1+)
-$fiber = new \Fiber(function (): string {
-	$value = \Fiber::suspend('first suspension');
+$fiber = new \Fiber( function(): string {
+
+	$value = \Fiber::suspend( 'first suspension' );
 	echo "Resumed with: {$value}\n";
+
 	return 'fiber complete';
-});
+} );
 
 $result = $fiber->start();
 echo $result . PHP_EOL;
-$fiber->resume('hello');
+$fiber->resume( 'hello' );
