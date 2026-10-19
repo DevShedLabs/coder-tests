@@ -2,49 +2,53 @@
 
 /**
  * For fun
- * 
- * A binary tree is a hierarchical data structure where each node has at most two children, 
+ *
+ * A binary tree is a hierarchical data structure where each node has at most two children,
  * called the left child and the right child.
- * 
+ *
  * This example inverts the tree, showing both the original and the inverted version in a visual representation.
- * 
+ *
  */
 
 declare(strict_types=1);
 
-/** 
- * A binary-tree node with an integer value and optional children. 
+/**
+ * A binary-tree node with an integer value and optional children.
  */
-class Node
-{
+class Node {
+
 	public ?Node $left = null;
 	public ?Node $right = null;
 
 	/** Create a node without children. */
-	public function __construct(public int $value) {}
+	public function __construct( public int $value ) {}
 }
 
 /**
  * Invert a tree in place without recursive calls.
  * Time: O(N). Auxiliary space: O(N) in the worst case.
  */
-function invertTreeIterative(?Node $root): ?Node
-{
-	if ($root === null) {
+function invertTreeIterative( ?Node $root ): ?Node {
+
+	if ( $root === null ) {
+
 		return null;
 	}
 
-	$stack = [$root];
+	$stack = array( $root );
 
-	while ($stack !== []) {
-		$current = array_pop($stack);
-		[$current->left, $current->right] = [$current->right, $current->left];
+	while ( $stack !== array() ) {
 
-		if ($current->left !== null) {
+		$current                            = array_pop( $stack );
+		[ $current->left, $current->right ] = array( $current->right, $current->left );
+
+		if ( $current->left !== null ) {
+
 			$stack[] = $current->left;
 		}
 
-		if ($current->right !== null) {
+		if ( $current->right !== null ) {
+
 			$stack[] = $current->right;
 		}
 	}
@@ -52,204 +56,267 @@ function invertTreeIterative(?Node $root): ?Node
 	return $root;
 }
 
-/** 
- * Return path-to-value pairs, preserving left/right structure for verification. 
+/**
+ * Return path-to-value pairs, preserving left/right structure for verification.
  */
-function treeSnapshot(?Node $root): array
-{
-	$values = [];
-	$stack = [[$root, 'root']];
-	while ($stack !== []) {
-		[$node, $path] = array_pop($stack);
-		if ($node === null) {
+function treeSnapshot( ?Node $root ): array {
+
+	$values = array();
+	$stack  = array( array( $root, 'root' ) );
+
+	while ( $stack !== array() ) {
+
+		[ $node, $path ] = array_pop( $stack );
+
+		if ( $node === null ) {
+
 			continue;
 		}
 		$values[$path] = $node->value;
-		$stack[] = [$node->right, $path . '.R'];
-		$stack[] = [$node->left, $path . '.L'];
+		$stack[]       = array( $node->right, $path . '.R' );
+		$stack[]       = array( $node->left, $path . '.L' );
 	}
 
 	return $values;
 }
 
-/** 
- * Escape text for HTML and SVG output. 
+/**
+ * Escape text for HTML and SVG output.
  */
-function escape(string $text): string
-{
-	return htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+function escape( string $text ): string {
+
+	return htmlspecialchars( $text, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8' );
 }
 
-/** 
- * Render a connected SVG diagram and an accessible textual description. 
+/**
+ * Render a connected SVG diagram and an accessible textual description.
  */
-function renderTree(?Node $root, string $id, string $title): string
-{
-	if ($root === null) {
+function renderTree( ?Node $root, string $id, string $title ): string {
+
+	if ( $root === null ) {
+
 		return '<p>Empty tree.</p>';
 	}
 
 	// Split each parent's horizontal interval equally, retaining missing slots.
-	$stack = [[$root, 0, 640, 0, null, null, 'Root']];
-	$edges = '';
-	$nodes = '';
-	$descriptions = [];
-	$maxDepth = 0;
+	$stack = array( array( $root, 0, 640, 0, null, null, 'Root' ) );
+	$edges        = '';
+	$nodes        = '';
+	$descriptions = array();
+	$maxDepth     = 0;
 
-	while ($stack !== []) {
-		[$node, $min, $max, $depth, $parentX, $parentY, $side] = array_pop($stack);
+	while ( $stack !== array() ) {
 
-		$x = ($min + $max) / 2;
-		$y = 48 + $depth * 110;
-		$maxDepth = max($maxDepth, $depth);
-		$empty = $node === null;
-		$class = $empty ? 'edge empty-edge' : 'edge';
+		[ $node, $min, $max, $depth, $parentX, $parentY, $side ] = array_pop( $stack );
 
-		if ($parentX !== null) {
-			$labelX = ($parentX + $x) / 2;
-			$labelY = ($parentY + $y) / 2;
-			$edges .= '<line class="' . $class . '" x1="' . $parentX . '" y1="' . ($parentY + 24)
-				. '" x2="' . $x . '" y2="' . ($y - 24) . '" />';
-			$edges .= '<text class="edge-label" x="' . $labelX . '" y="' . $labelY . '">'
-				. escape($side) . '</text>';
+		$x        = ( $min + $max ) / 2;
+		$y        = 48 + $depth * 110;
+		$maxDepth = max( $maxDepth, $depth );
+		$empty    = $node === null;
+		$class    = $empty ? 'edge empty-edge' : 'edge';
+
+		if ( $parentX !== null ) {
+
+			$labelX = ( $parentX + $x ) / 2;
+			$labelY = ( $parentY + $y ) / 2;
+			$edges .=
+				'<line class="' .
+				$class .
+				'" x1="' .
+				$parentX .
+				'" y1="' .
+				( $parentY + 24 ) .
+				'" x2="' .
+				$x .
+				'" y2="' .
+				( $y - 24 ) .
+				'" />';
+			$edges .= '<text class="edge-label" x="' . $labelX . '" y="' . $labelY . '">' . escape( $side ) . '</text>';
 		}
 
-		$nodes .= '<circle class="' . ($empty ? 'empty-node' : 'node') . '" cx="' . $x
-			. '" cy="' . $y . '" r="24" />';
+		$nodes .=
+			'<circle class="' . ( $empty ? 'empty-node' : 'node' ) . '" cx="' . $x . '" cy="' . $y . '" r="24" />';
 
-		$nodes .= '<text class="node-label" x="' . $x . '" y="' . $y . '">'
-			. ($empty ? '∅' : escape((string) $node->value)) . '</text>';
+		$nodes .=
+			'<text class="node-label" x="' .
+			$x .
+			'" y="' .
+			$y .
+			'">' .
+			( $empty ? '∅' : escape( (string) $node->value ) ) .
+			'</text>';
 
-		if ($empty) {
+		if ( $empty ) {
+
 			continue;
 		}
 
-		$descriptions[] = 'Node ' . $node->value . ': left '
-			. ($node->left === null ? 'empty' : $node->left->value) . ', right '
-			. ($node->right === null ? 'empty' : $node->right->value) . ".\n";
+		$descriptions[] =
+			'Node ' .
+			$node->value .
+			': left ' .
+			( $node->left === null ? 'empty' : $node->left->value ) .
+			', right ' .
+			( $node->right === null ? 'empty' : $node->right->value ) .
+			".\n";
 
-		if ($node->left !== null || $node->right !== null) {
-			$stack[] = [$node->right, $x, $max, $depth + 1, $x, $y, 'R'];
-			$stack[] = [$node->left, $min, $x, $depth + 1, $x, $y, 'L'];
+		if ( $node->left !== null || $node->right !== null ) {
+
+			$stack[] = array( $node->right, $x, $max, $depth + 1, $x, $y, 'R' );
+			$stack[] = array( $node->left, $min, $x, $depth + 1, $x, $y, 'L' );
 		}
 	}
 
-	$description = 'Root: ' . $root->value . '. ' . implode(' ', $descriptions);
-	$height = 96 + $maxDepth * 110;
+	$description = 'Root: ' . $root->value . '. ' . implode( ' ', $descriptions );
+	$height      = 96 + $maxDepth * 110;
 
-	return '<svg viewBox="0 0 640 ' . $height . '" role="img" aria-labelledby="'
-		. escape($id) . '-title ' . escape($id) . '-desc">'
-		. '<title id="' . escape($id) . '-title">' . escape($title) . '</title>'
-		. '<desc id="' . escape($id) . '-desc">' . escape($description) . '</desc>'
-		. $edges . $nodes . '</svg><details><summary>Text description</summary><p>'
-		. nl2br(escape($description)) . '</p></details>';
+	return '<svg viewBox="0 0 640 ' .
+		$height .
+		'" role="img" aria-labelledby="' .
+		escape( $id ) .
+		'-title ' .
+		escape( $id ) .
+		'-desc">' .
+		'<title id="' .
+		escape( $id ) .
+		'-title">' .
+		escape( $title ) .
+		'</title>' .
+		'<desc id="' .
+		escape( $id ) .
+		'-desc">' .
+		escape( $description ) .
+		'</desc>' .
+		$edges .
+		$nodes .
+		'</svg><details><summary>Text description</summary><p>' .
+		nl2br( escape( $description ) ) .
+		'</p></details>';
 }
 
-/** 
- * Build a tree from level-order integers/nulls; null parents consume no child slots. 
+/**
+ * Build a tree from level-order integers/nulls; null parents consume no child slots.
  */
-function buildTree(array $values): ?Node
-{
-	foreach ($values as $value) {
-		if ($value !== null && !is_int($value)) {
-			throw new InvalidArgumentException('Tree values must be integers or null.');
+function buildTree( array $values ): ?Node {
+
+	foreach ( $values as $value ) {
+
+		if ( $value !== null && ! is_int( $value ) ) {
+
+			throw new InvalidArgumentException( 'Tree values must be integers or null.' );
 		}
 	}
 
-	$values = array_values($values);
-	$root = isset($values[0]) ? new Node($values[0]) : null;
-	$queue = $root === null ? [] : [$root];
-	$index = 1;
+	$values = array_values( $values );
+	$root   = isset( $values[0] ) ? new Node( $values[0] ) : null;
+	$queue  = $root === null ? array() : array( $root );
+	$index  = 1;
 
-	for ($head = 0; $head < count($queue); $head++) {
+	for ( $head = 0; $head < count( $queue ); $head++ ) {
 
-		foreach (['left', 'right'] as $side) {
+		foreach ( array( 'left', 'right' ) as $side ) {
 
-			if ($index >= count($values)) {
+			if ( $index >= count( $values ) ) {
+
 				break;
 			}
 			$value = $values[$index++];
 
-			if ($value !== null) {
-				$child = new Node($value);
+			if ( $value !== null ) {
+
+				$child                 = new Node( $value );
 				$queue[$head]->{$side} = $child;
-				$queue[] = $child;
+				$queue[]               = $child;
 			}
 		}
 	}
-	foreach (array_slice($values, $index) as $value) {
-		if ($value !== null) {
-			throw new InvalidArgumentException('A non-empty node has no parent.');
+
+	foreach ( array_slice( $values, $index ) as $value ) {
+
+		if ( $value !== null ) {
+
+			throw new InvalidArgumentException( 'A non-empty node has no parent.' );
 		}
 	}
+
 	return $root;
 }
 
 /**
- * Serialize in level order, retaining interior nulls and omitting trailing nulls. 
+ * Serialize in level order, retaining interior nulls and omitting trailing nulls.
  */
-function treeValues(?Node $root): array
-{
-	$values = [];
-	$queue = $root === null ? [] : [$root];
+function treeValues( ?Node $root ): array {
 
-	for ($head = 0; $head < count($queue); $head++) {
-		$node = $queue[$head];
+	$values = array();
+	$queue  = $root === null ? array() : array( $root );
+
+	for ( $head = 0; $head < count( $queue ); $head++ ) {
+
+		$node     = $queue[$head];
 		$values[] = $node === null ? null : $node->value;
 
-		if ($node !== null) {
+		if ( $node !== null ) {
+
 			$queue[] = $node->left;
 			$queue[] = $node->right;
 		}
 	}
 
-	while ($values !== [] && end($values) === null) {
-		array_pop($values);
+	while ( $values !== array() && end( $values ) === null ) {
+
+		array_pop( $values );
 	}
+
 	return $values;
 }
 
-/** 
- * Verify mirrored paths and double inversion independently of example values. 
+/**
+ * Verify mirrored paths and double inversion independently of example values.
  */
-function verifyInversion(?Node $invertedRoot, array $originalSnapshot): void
-{
-	$expected = [];
+function verifyInversion( ?Node $invertedRoot, array $originalSnapshot ): void {
 
-	foreach ($originalSnapshot as $path => $value) {
-		$expected[strtr($path, ['L' => 'R', 'R' => 'L'])] = $value;
+	$expected = array();
+
+	foreach ( $originalSnapshot as $path => $value ) {
+
+		$expected[strtr( $path, array(
+			'L' => 'R',
+			'R' => 'L',
+		) )] = $value;
 	}
 
-	$actual = treeSnapshot($invertedRoot);
-	ksort($expected);
-	ksort($actual);
+	$actual = treeSnapshot( $invertedRoot );
+	ksort( $expected );
+	ksort( $actual );
 
-	if ($actual !== $expected || invertTreeIterative(null) !== null) {
-		throw new RuntimeException('Tree inversion failed the mirrored structure check.');
+	if ( $actual !== $expected || invertTreeIterative( null ) !== null ) {
+
+		throw new RuntimeException( 'Tree inversion failed the mirrored structure check.' );
 	}
 
-	invertTreeIterative($invertedRoot);
+	invertTreeIterative( $invertedRoot );
 
-	$restored = treeSnapshot($invertedRoot) === $originalSnapshot;
+	$restored = treeSnapshot( $invertedRoot ) === $originalSnapshot;
 
-	invertTreeIterative($invertedRoot);
+	invertTreeIterative( $invertedRoot );
 
-	if (!$restored) {
-		throw new RuntimeException('Inverting twice did not restore the original tree.');
+	if ( ! $restored ) {
+
+		throw new RuntimeException( 'Inverting twice did not restore the original tree.' );
 	}
 }
 
 // Edit this level-order array to try another tree. Use null for missing children.
-$input = [4, 2, 7, 1, 3, 6, 9];
-$input = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-$root = buildTree($input);
-$originalSnapshot = treeSnapshot($root);
-$inputValues = treeValues($root);
-$originalDiagram = renderTree($root, 'original', 'Original tree');
-invertTreeIterative($root);
-verifyInversion($root, $originalSnapshot);
-$outputValues = treeValues($root);
-$invertedDiagram = renderTree($root, 'inverted', 'Inverted tree');
+$input = array( 4, 2, 7, 1, 3, 6, 9 );
+$input            = array( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 );
+$root             = buildTree( $input );
+$originalSnapshot = treeSnapshot( $root );
+$inputValues      = treeValues( $root );
+$originalDiagram  = renderTree( $root, 'original', 'Original tree' );
+invertTreeIterative( $root );
+verifyInversion( $root, $originalSnapshot );
+$outputValues    = treeValues( $root );
+$invertedDiagram = renderTree( $root, 'inverted', 'Inverted tree' );
 
 // Display a nice visual output.
 ?>
