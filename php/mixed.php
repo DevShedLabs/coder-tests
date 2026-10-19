@@ -1,8 +1,8 @@
 <?php
 
 /*
- * Example mixed PHP / HTML / CSS 
- * 
+ * Example mixed PHP / HTML / CSS
+ *
  */
 
 $page_title = 'Test mixed';
