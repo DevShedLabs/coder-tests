@@ -9,73 +9,83 @@
 		*::before,
 		*::after {
 			box-sizing: border-box;
-			margin: 0;
-			padding: 0;
+			margin:     0;
+			padding:    0;
 		}
 
 		:root {
-			--color-bg: #1e1e2e;
+			--color-bg:      #1e1e2e;
 			--color-surface: #313244;
-			--color-text: #cdd6f4;
-			--color-accent: #89b4fa;
-			--color-muted: #6c7086;
-			--radius: 8px;
+			--color-text:    #cdd6f4;
+			--color-accent:  #89b4fa;
+			--color-muted:   #6c7086;
+			--background:    #f4f7fb;
+			--surface:       #ffffff;
+			--text:          #182638;
+			--muted:         #475569;
+			--border:        #cbd5e1;
+			--accent:        #1e40af;
+			--node-fill:     #eff6ff;
+			--success:       #166534;
+			--radius:        1rem;
+			--space:         1rem;
+			--radius:        8px;
 		}
 
 		body {
 			font-family: system-ui, -apple-system, sans-serif;
-			background: var(--color-bg);
-			color: var(--color-text);
-			padding: 2rem;
+			background:  var(--color-bg);
+			color:       var(--color-text);
+			padding:     2rem;
 			line-height: 1.6;
 		}
 
 		.container {
 			max-width: 800px;
-			margin: 0 auto;
+			margin:    0 auto;
 		}
 
 		header {
-			display: flex;
-			align-items: center;
+			display:         flex;
+			align-items:     center;
 			justify-content: space-between;
-			padding-bottom: 1.5rem;
-			border-bottom: 1px solid var(--color-surface);
-			margin-bottom: 2rem;
+			padding-bottom:  1.5rem;
+			border-bottom:   1px solid var(--color-surface);
+			margin-bottom:   2rem;
 		}
 
 		h1 {
 			font-size: 1.5rem;
-			color: var(--color-accent);
+			color:     var(--color-accent);
 		}
 
 		.card {
-			background: var(--color-surface);
+			background:    var(--color-surface);
 			border-radius: var(--radius);
-			padding: 1.5rem;
+			padding:       1.5rem;
 			margin-bottom: 1rem;
 		}
 
 		.card h2 {
-			font-size: 1rem;
+			font-size:     1rem;
 			margin-bottom: .5rem;
 		}
 
 		.card p {
-			color: var(--color-muted);
+			color:     var(--color-muted);
 			font-size: .9rem;
 		}
 
 		.btn {
-			display: inline-flex;
-			align-items: center;
-			gap: .4rem;
-			padding: .5rem 1rem;
+			display:       inline-flex;
+			align-items:   center;
+			gap:           .4rem;
+			padding:       .5rem 1rem;
 			border-radius: calc(var(--radius) / 2);
-			font-size: .875rem;
-			font-weight: 500;
-			cursor: pointer;
-			transition: opacity .15s;
+			font-size:     .875rem;
+			font-weight:   500;
+			cursor:        pointer;
+			transition:    opacity .15s;
 		}
 
 		.btn:hover {
@@ -84,39 +94,39 @@
 
 		.btn-primary {
 			background: var(--color-accent);
-			color: var(--color-bg);
-			border: none;
+			color:      var(--color-bg);
+			border:     none;
 		}
 
 		.btn-ghost {
 			background: transparent;
-			color: var(--color-text);
-			border: 1px solid var(--color-surface);
+			color:      var(--color-text);
+			border:     1px solid var(--color-surface);
 		}
 
 		form {
-			display: flex;
+			display:        flex;
 			flex-direction: column;
-			gap: .75rem;
+			gap:            .75rem;
 		}
 
 		label {
 			font-size: .875rem;
-			color: var(--color-muted);
+			color:     var(--color-muted);
 		}
 
 		input,
 		textarea,
 		select {
-			width: 100%;
-			background: var(--color-bg);
-			border: 1px solid var(--color-muted);
+			width:         100%;
+			background:    var(--color-bg);
+			border:        1px solid var(--color-muted);
 			border-radius: calc(var(--radius) / 2);
-			padding: .5rem .75rem;
-			color: var(--color-text);
-			font-size: .9rem;
-			outline: none;
-			transition: border-color .15s;
+			padding:       .5rem .75rem;
+			color:         var(--color-text);
+			font-size:     .9rem;
+			outline:       none;
+			transition:    border-color .15s;
 		}
 
 		input:focus,
@@ -126,14 +136,14 @@
 		}
 
 		#output {
-			margin-top: 1rem;
-			padding: .75rem;
-			background: var(--color-bg);
+			margin-top:    1rem;
+			padding:       .75rem;
+			background:    var(--color-bg);
 			border-radius: calc(var(--radius) / 2);
-			font-family: monospace;
-			font-size: .85rem;
-			min-height: 2.5rem;
-			white-space: pre-wrap;
+			font-family:   monospace;
+			font-size:     .85rem;
+			min-height:    2.5rem;
+			white-space:   pre-wrap;
 		}
 	</style>
 </head>
@@ -185,7 +195,8 @@
 			<p>Items added via form submission appear here.</p>
 			<ul
 				id="itemList"
-				style="margin-top:.75rem;list-style:none;display:flex;flex-direction:column;gap:.4rem;"></ul>
+				style="margin-top:.75rem;list-style:none;display:flex;flex-direction:column;gap:.4rem;"
+			></ul>
 		</div>
 	</div>
 
