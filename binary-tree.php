@@ -39,8 +39,8 @@ function invertTreeIterative( ?Node $root ): ?Node {
 
 	while ( $stack !== array() ) {
 
-		$current                            = array_pop( $stack );
-		[ $current->left, $current->right ] = array( $current->right, $current->left );
+		$current                          = array_pop( $stack );
+		[$current->left, $current->right] = array( $current->right, $current->left );
 
 		if ( $current->left !== null ) {
 
@@ -66,7 +66,7 @@ function treeSnapshot( ?Node $root ): array {
 
 	while ( $stack !== array() ) {
 
-		[ $node, $path ] = array_pop( $stack );
+		[$node, $path] = array_pop( $stack );
 
 		if ( $node === null ) {
 
@@ -99,7 +99,7 @@ function renderTree( ?Node $root, string $id, string $title ): string {
 	}
 
 	// Split each parent's horizontal interval equally, retaining missing slots.
-	$stack = array( array( $root, 0, 640, 0, null, null, 'Root' ) );
+	$stack        = array( array( $root, 0, 640, 0, null, null, 'Root' ) );
 	$edges        = '';
 	$nodes        = '';
 	$descriptions = array();
@@ -107,7 +107,7 @@ function renderTree( ?Node $root, string $id, string $title ): string {
 
 	while ( $stack !== array() ) {
 
-		[ $node, $min, $max, $depth, $parentX, $parentY, $side ] = array_pop( $stack );
+		[$node, $min, $max, $depth, $parentX, $parentY, $side] = array_pop( $stack );
 
 		$x        = ( $min + $max ) / 2;
 		$y        = 48 + $depth * 110;
@@ -307,7 +307,7 @@ function verifyInversion( ?Node $invertedRoot, array $originalSnapshot ): void {
 }
 
 // Edit this level-order array to try another tree. Use null for missing children.
-$input = array( 4, 2, 7, 1, 3, 6, 9 );
+$input            = array( 4, 2, 7, 1, 3, 6, 9 );
 $input            = array( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 );
 $root             = buildTree( $input );
 $originalSnapshot = treeSnapshot( $root );
@@ -329,169 +329,168 @@ $invertedDiagram = renderTree( $root, 'inverted', 'Inverted tree' );
 	<meta name="description" content="Compare a binary tree before and after iterative inversion, with labeled branches and empty child positions.">
 	<title>Binary tree inversion — visual comparison</title>
 	<style>
-				:root {
-					color-scheme: light dark;
-					--background: #f4f7fb;
-					--surface: #ffffff;
-					--text: #182638;
-					--muted: #475569;
-					--border: #cbd5e1;
-					--accent: #1e40af;
-					--node-fill: #eff6ff;
-					--success: #166534;
-					--radius: 1rem;
-					--space: 1rem;
-					--font: system-ui, sans-serif;
-				}
+		:root {
+			color-scheme: light dark;
+			--background: #f4f7fb;
+			--surface: #ffffff;
+			--text: #182638;
+			--muted: #475569;
+			--border: #cbd5e1;
+			--accent: #1e40af;
+			--node-fill: #eff6ff;
+			--success: #166534;
+			--radius: 1rem;
+			--space: 1rem;
+			--font: system-ui, sans-serif;
+		}
 
-				@media (prefers-color-scheme: dark) {
-					:root {
-						--background: #101827;
-						--surface: #192537;
-						--text: #f1f5f9;
-						--muted: #cbd5e1;
-						--border: #52647c;
-						--accent: #93c5fd;
-						--node-fill: #243b59;
-						--success: #86efac;
-					}
-				}
+		@media (prefers-color-scheme: dark) {
+			:root {
+				--background: #101827;
+				--surface: #192537;
+				--text: #f1f5f9;
+				--muted: #cbd5e1;
+				--border: #52647c;
+				--accent: #93c5fd;
+				--node-fill: #243b59;
+				--success: #86efac;
+			}
+		}
 
-				* {
-					box-sizing: border-box;
-				}
+		* {
+			box-sizing: border-box;
+		}
 
-				body {
-					margin: 0;
-					background: var(--background);
-					color: var(--text);
-					font-family: var(--font);
-					line-height: 1.6;
-				}
+		body {
+			margin: 0;
+			background: var(--background);
+			color: var(--text);
+			font-family: var(--font);
+			line-height: 1.6;
+		}
 
-				main {
-					max-width: 85rem;
-					margin: auto;
-					padding: calc(var(--space) * 2) var(--space);
-				}
+		main {
+			max-width: 85rem;
+			margin: auto;
+			padding: calc(var(--space) * 2) var(--space);
+		}
 
-				h1 {
-					font-size: 2rem;
-					line-height: 1.2;
-				}
+		h1 {
+			font-size: 2rem;
+			line-height: 1.2;
+		}
 
-				h2 {
-					margin-top: 0;
-					font-size: 1.25rem;
-				}
+		h2 {
+			margin-top: 0;
+			font-size: 1.25rem;
+		}
 
-				p {
-					color: var(--muted);
-				}
+		p {
+			color: var(--muted);
+		}
 
-				code {
-					overflow-wrap: anywhere;
-				}
+		code {
+			overflow-wrap: anywhere;
+		}
 
-				.comparison {
-					display: grid;
-					gap: var(--space);
-					margin-block: calc(var(--space) * 2);
-				}
+		.comparison {
+			display: grid;
+			gap: var(--space);
+			margin-block: calc(var(--space) * 2);
+		}
 
-				.tree-panel {
-					min-width: 0;
-					padding: var(--space);
-					border: 1px solid var(--border);
-					border-radius: var(--radius);
-					background: var(--surface);
-				}
+		.tree-panel {
+			min-width: 0;
+			padding: var(--space);
+			border: 1px solid var(--border);
+			border-radius: var(--radius);
+			background: var(--surface);
+		}
 
-				svg {
-					display: block;
-					width: 100%;
-					height: auto;
-				}
+		svg {
+			display: block;
+			width: 100%;
+			height: auto;
+		}
 
-				.edge {
-					stroke: var(--muted);
-					stroke-width: 2;
-				}
+		.edge {
+			stroke: var(--muted);
+			stroke-width: 2;
+		}
 
-				.empty-edge,
-				.empty-node {
-					stroke-dasharray: 5 4;
-				}
+		.empty-edge,
+		.empty-node {
+			stroke-dasharray: 5 4;
+		}
 
-				.node {
-					fill: var(--node-fill);
-					stroke: var(--accent);
-					stroke-width: 2;
-				}
+		.node {
+			fill: var(--node-fill);
+			stroke: var(--accent);
+			stroke-width: 2;
+		}
 
-				.empty-node {
-					fill: var(--surface);
-					stroke: var(--muted);
-					stroke-width: 2;
-				}
+		.empty-node {
+			fill: var(--surface);
+			stroke: var(--muted);
+			stroke-width: 2;
+		}
 
-				.node-label,
-				.edge-label {
-					fill: var(--text);
-					text-anchor: middle;
-					dominant-baseline: middle;
-					font-family: var(--font);
-				}
+		.node-label,
+		.edge-label {
+			fill: var(--text);
+			text-anchor: middle;
+			dominant-baseline: middle;
+			font-family: var(--font);
+		}
 
-				.node-label {
-					font-size: 20px;
-					font-weight: 700;
-				}
+		.node-label {
+			font-size: 20px;
+			font-weight: 700;
+		}
 
-				.edge-label {
-					font-size: 16px;
-					font-weight: 600;
-					stroke: var(--surface);
-					stroke-width: 6;
-					paint-order: stroke;
-				}
+		.edge-label {
+			font-size: 16px;
+			font-weight: 600;
+			stroke: var(--surface);
+			stroke-width: 6;
+			paint-order: stroke;
+		}
 
-				summary {
-					cursor: pointer;
-					padding-block: var(--space);
-					color: var(--accent);
-				}
+		summary {
+			cursor: pointer;
+			padding-block: var(--space);
+			color: var(--accent);
+		}
 
-				:focus-visible {
-					outline: 3px solid var(--accent);
-					outline-offset: 4px;
-				}
+		:focus-visible {
+			outline: 3px solid var(--accent);
+			outline-offset: 4px;
+		}
 
-				.checks {
-					color: var(--success);
-					font-weight: 600;
-				}
+		.checks {
+			color: var(--success);
+			font-weight: 600;
+		}
 
-				.skip-link {
-					position: absolute;
-					top: 0;
-					left: var(--space);
-					padding: var(--space);
-					background: var(--surface);
-					color: var(--accent);
-					transform: translateY(-110%);
-				}
+		.skip-link {
+			position: absolute;
+			top: 0;
+			left: var(--space);
+			padding: var(--space);
+			background: var(--surface);
+			color: var(--accent);
+			transform: translateY(-110%);
+		}
 
-				.skip-link:focus {
-					transform: translateY(0);
-				}
+		.skip-link:focus {
+			transform: translateY(0);
+		}
 
-				@media (min-width: 60rem) {
-					.comparison {
-						grid-template-columns: repeat(2, minmax(0, 1fr));
-					}
-				}
-			
+		@media (min-width: 60rem) {
+			.comparison {
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+			}
+		}
 	</style>
 </head>
 
