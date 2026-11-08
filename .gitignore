@@ -2,3 +2,4 @@ rust/target/
 swift/.build/
 board.json
 test
+__pycache__
